@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name = Nyan Cat Theme
+Description = Animacion del nyancat.
+ModuleName = script
+
+[script]
+ImageDir = /home/zoek/nyancat/Img
+ScriptFile = /home/zoek/nyancat/nyancat.script

@@ -1,0 +1,47 @@
+Window.SetBackgroundTopColor(0,0,0.35);
+Window.SetBackgroundBottomColor(0,0,0.35);
+
+# Numero de Sprites
+Nyan.Sprites = 6;
+# Nombre base de los sprites
+Nyan.NombreBase = "nyancat";
+# Extension de imagenes - plymouth solo soporta `png`
+Nyan.Extension = ".png";
+# Identificador de el personaje en los sprites
+Nyan.NombrePersonaje = "simple";
+#Nyan.NombrePersonaje = "ninja";
+# Asignacion de imagenes a un hash
+for (i=0; i < Nyan.Sprites; ++i)
+{
+    Nyan[i] = Image(Nyan.NombreBase + "-" +
+    	      	    Nyan.NombrePersonaje + "-" +
+		    i + Nyan.Extension);
+}
+
+# Creacion de un objeto sprite - Necesario para mostrar en pantalla
+Nyan.Sprite = Sprite();
+
+indice = 0;
+
+# Cordenadas X,Y - Centro de pantalla.
+Nyan.X = Window.GetWidth() / 2 - Nyan[0].GetWidth() / 2;
+Nyan.Y = Window.GetHeight() / 2 - Nyan[0].GetHeight() / 2;
+
+# Funcion de animacion
+fun refresh ()
+{
+
+    if (indice > Nyan.Sprites)
+	indice = 0;
+    else
+	indice += 0.08;
+
+    # Especificacion de imagen de acuerdo al indice
+    Nyan.Sprite.SetImage(Nyan[Math.Int(indice)]);
+
+    # Hubicacion de imagen en pantalla
+    Nyan.Sprite.SetX (Nyan.X);
+    Nyan.Sprite.SetY (Nyan.Y);
+}
+
+Plymouth.SetRefreshFunction(refresh);
