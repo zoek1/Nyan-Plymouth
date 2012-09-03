@@ -1,47 +1,93 @@
-Window.SetBackgroundTopColor(0,0,0.35);
-Window.SetBackgroundBottomColor(0,0,0.35);
+Window.SetBackgroundTopColor(0.3,0.3,0.8);
+Window.SetBackgroundBottomColor(0,0,0.7);
+
+
+# Asignacion de imagenes a un hash
+fun Asignacion_Hash (N_Sprites, Nombre_Base, Nombre_Complemento)
+{
+    for (i=0; i < N_Sprites; ++i)
+	 New_Hash[i] = Image(Nombre_Base +
+    	      		     Nombre_Complemento +
+			     i + ".png");
+
+    return New_Hash;
+}
+
 
 # Numero de Sprites
 Nyan.Sprites = 6;
+
 # Nombre base de los sprites
 Nyan.NombreBase = "nyancat";
-# Extension de imagenes - plymouth solo soporta `png`
-Nyan.Extension = ".png";
-# Identificador de el personaje en los sprites
-Nyan.NombrePersonaje = "simple";
-#Nyan.NombrePersonaje = "ninja";
-# Asignacion de imagenes a un hash
-for (i=0; i < Nyan.Sprites; ++i)
-{
-    Nyan[i] = Image(Nyan.NombreBase + "-" +
-    	      	    Nyan.NombrePersonaje + "-" +
-		    i + Nyan.Extension);
-}
 
+# Identificador de el personaje en los sprites
+#Nyan.NombrePersonaje = "simple";
+Nyan.NombrePersonaje = "ninja";
+
+Nyan.Avanze = 0.1;
 # Creacion de un objeto sprite - Necesario para mostrar en pantalla
 Nyan.Sprite = Sprite();
+
+
+Nyan.Hash = Asignacion_Hash(Nyan.Sprites,
+	    		    Nyan.NombreBase + "-",
+			    Nyan.NombrePersonaje + "-");
+
+
 
 indice = 0;
 
 # Cordenadas X,Y - Centro de pantalla.
-Nyan.X = Window.GetWidth() / 2 - Nyan[0].GetWidth() / 2;
-Nyan.Y = Window.GetHeight() / 2 - Nyan[0].GetHeight() / 2;
+Nyan.X = Window.GetWidth() / 2 - Nyan.Hash[0].GetWidth() / 2;
+Nyan.Y = Window.GetHeight() / 2 - Nyan.Hash[0].GetHeight() / 2;
+
+
+# ------------------------- < Arcoiris > ---------------------------------------
+
+Arcoiris.NombreBase = "nyancat";
+Arcoiris.Identificador = "arcoiris";
+Arcoiris.Sprites = 2;
+Arcoiris.Avanze = 0.03;
+
+Arcoiris.Hash = Asignacion_Hash(Arcoiris.Sprites,
+	    		    Arcoiris.NombreBase + "-",
+			    Arcoiris.Identificador + "-");
+
+Arcoiris.Sprite = Sprite();
+
+Arcoiris.X = 0;
+Arcoiris.Y = Nyan.Y + 10;
+
+ScaleX = Window.GetWidth() / 2;
+ScaleY = Nyan.Hash[0].GetHeight() - 40;
+
+Arcoiris.Hash[0] = Arcoiris.Hash[0].Scale(ScaleX,ScaleY);
+Arcoiris.Hash[1] = Arcoiris.Hash[1].Scale(ScaleX,ScaleY);
+
+Arcoiris.Sprite.SetZ(-1);
+# ------------------------- </ arcoiris > --------------------------------------
 
 # Funcion de animacion
 fun refresh ()
 {
-
     if (indice > Nyan.Sprites)
 	indice = 0;
     else
-	indice += 0.08;
+	indice += Nyan.Avanze;
 
     # Especificacion de imagen de acuerdo al indice
-    Nyan.Sprite.SetImage(Nyan[Math.Int(indice)]);
+    Nyan.Sprite.SetImage(Nyan.Hash[Math.Int(indice)]);
 
     # Hubicacion de imagen en pantalla
     Nyan.Sprite.SetX (Nyan.X);
     Nyan.Sprite.SetY (Nyan.Y);
+
+    # Especificacion de imagen de acuerdo al indice
+    Arcoiris.Sprite.SetImage(Arcoiris.Hash[Math.Int(indice) % 2]);
+
+    # Hubicacion de imagen en pantalla
+    Arcoiris.Sprite.SetX (Arcoiris.X);
+    Arcoiris.Sprite.SetY (Arcoiris.Y);
 }
 
 Plymouth.SetRefreshFunction(refresh);
