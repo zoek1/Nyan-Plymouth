@@ -20,9 +20,15 @@ Nyan.Sprites = 6;
 Nyan.NombreBase = "nyancat";
 
 # Identificador de el personaje en los sprites
-Nyan.NombrePersonaje = "simple";
-#Nyan.NombrePersonaje = "ninja";
-
+if (Plymouth.GetMode() == "boot")
+   Nyan.NombrePersonaje = "simple";
+else if (Plymouth.GetMode() == "shutdown")
+   Nyan.NombrePersonaje = "ninja";
+else
+{
+   Window.SetBackgroundTopColor(0,0,0);
+   Window.SetBackgroundBottomColor(0,0,0f);
+}
 Nyan.Avanze = 0.3;
 # Creacion de un objeto sprite - Necesario para mostrar en pantalla
 Nyan.Sprite = Sprite();
@@ -58,15 +64,13 @@ for (i=0; i < Arcoiris.NumImagenes; i++)
 while (Arcoiris.X < PosicionX)
 {
     Arcoiris.HashSprites[Arcoiris.NumSprites] = Sprite(Arcoiris.Imagenes[contador]);
-    if (contador == 3 || contador == 1)
-	Arcoiris.HashSprites[Arcoiris.NumSprites].SetPosition(Arcoiris.X,
-							  Arcoiris.Y,
+    Arcoiris.HashSprites[Arcoiris.NumSprites].SetPosition(Arcoiris.X,
+							  Arcoiris.Y + Math.Sin(90 * (contador + 1)),
 							  -3);
 
-    else
-    Arcoiris.HashSprites[Arcoiris.NumSprites].SetPosition(Arcoiris.X,
-							  Arcoiris.Y + (10 * Math.Sin(contador - 1)),
-							  -3);
+    Texto  = Image.Text("Imagen: " + Arcoiris.Y + Math.Sin(90 * (contador + 1)));
+    Posiciones [Arcoiris.NumSprites] = Spite(Texto);
+    Posiciones [Arcoiris.NumSprites].SetPosition(10,Arcoiris.NumSprites * 10,2);
 
     Arcoiris.NumSprites++;
     Arcoiris.X +=  Arcoiris.Imagenes[contador].GetWidth();

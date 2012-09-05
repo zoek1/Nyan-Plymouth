@@ -4,5 +4,5 @@ Description = Animacion del nyancat.
 ModuleName = script
 
 [script]
-ImageDir = /home/zoek/nyancat/Img
-ScriptFile = /home/zoek/nyancat/nyancat.script
+ImageDir = /lib/plymouth/themes/nyancat/Img
+ScriptFile = /lib/plymouth/themes/nyancat/nyancat.script
